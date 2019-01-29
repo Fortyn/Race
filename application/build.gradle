@@ -1,0 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+
+ext {
+    bootVer = "2.1.0.RELEASE"
+}
+dependencies {
+    implementation project(':database')
+    // tag::jetty[]
+    implementation("org.springframework.boot:spring-boot-starter-web:$bootVer") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+
+    implementation "org.springframework.boot:spring-boot-starter-jetty:$bootVer"
+    // end::jetty[]
+
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$bootVer"
+
+
+}
+

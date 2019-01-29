@@ -1,0 +1,4 @@
+rootProject.name = 'Silent'
+include 'database'
+include 'application'
+
