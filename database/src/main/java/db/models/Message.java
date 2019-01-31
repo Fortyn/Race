@@ -7,6 +7,8 @@ import java.util.Date;
 @Table(name = "message")
 public class Message {
     @Id
+    @SequenceGenerator( name = "MessageSequence", sequenceName = "message_id_seq", allocationSize = 1)
+    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "MessageSequence")
     private Long id;
 
     @Column(nullable = false)

@@ -7,6 +7,8 @@ import javax.persistence.*;
 public class Right {
 
     @Id
+    @SequenceGenerator( name = "RightSequence", sequenceName = "right_id_seq", allocationSize = 1)
+    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "RightSequence")
     private Long id;
 
     @Column(nullable = false)

@@ -8,6 +8,8 @@ import java.util.Set;
 @Table(name = "\"user\"")
 public class User {
     @Id
+    @SequenceGenerator( name = "UserSequence", sequenceName = "user_id_seq", allocationSize = 1)
+    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "UserSequence")
     private Long id;
 
     @Column(nullable = false)
@@ -23,17 +25,17 @@ public class User {
     private String salt;
 
     @OneToMany(mappedBy = "user")
-    private Set<Message> message = new HashSet<>();
+    private Set<Message> messages = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Right> rights = new HashSet<>();
 
-    public Set<Message> getMessage() {
-        return message;
+    public Set<Message> getMessages() {
+        return messages;
     }
 
-    public void setMessage(Set<Message> message) {
-        this.message = message;
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 
     public Set<Right> getRights() {

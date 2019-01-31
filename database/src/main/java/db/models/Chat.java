@@ -8,23 +8,25 @@ import java.util.Set;
 @Table(name = "chat")
 public class Chat {
     @Id
+    @SequenceGenerator(name = "ChatSequence", sequenceName = "chat_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ChatSequence")
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "chat")
-    private Set<Message> message = new HashSet<>();
+    private Set<Message> messages = new HashSet<>();
 
     @OneToMany(mappedBy = "chat")
     private Set<Right> rights = new HashSet<>();
 
-    public Set<Message> getMessage() {
-        return message;
+    public Set<Message> getMessages() {
+        return messages;
     }
 
-    public void setMessage(Set<Message> message) {
-        this.message = message;
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 
     public Set<Right> getRights() {
