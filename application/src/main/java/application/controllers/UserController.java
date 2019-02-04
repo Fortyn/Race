@@ -18,16 +18,21 @@ public class UserController {
     public User getUser(@RequestParam(name = "id") Long id){
         return userService.getUser(id);
     }
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+
+    @PostMapping(path = "/reg",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public User addUser(@RequestBody User user){
         return userService.addUser(user);
     }
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+
+    @PutMapping(
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public User updateUser(@RequestBody User user){
         return userService.updateUser(user);
     }
+
     @DeleteMapping()
     public void deleteUser(@RequestParam(name = "id") Long id){
         userService.deleteUser(id);

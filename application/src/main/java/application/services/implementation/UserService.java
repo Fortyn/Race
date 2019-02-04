@@ -3,6 +3,9 @@ package application.services.implementation;
 import application.repositories.UserRepository;
 import application.services.IUserService;
 import db.models.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -21,6 +24,7 @@ public class UserService implements IUserService {
     @Override
     public User addUser(User user) {
         if(user.getId() != null) throw new IllegalArgumentException("New entity can not have id");
+        user.setSalt("salt");
         return userRepository.save(user);
     }
 
