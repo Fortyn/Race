@@ -25,7 +25,7 @@ ALTER TABLE silent.chat
     name character varying(30) NOT NULL,
     login character varying(30) NOT NULL,
     salt character varying(30) NOT NULL,
-    password character varying(30) NOT NULL,
+    password character varying(60) NOT NULL,
     CONSTRAINT user_pk PRIMARY KEY (id)
   )
   WITH (
