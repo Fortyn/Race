@@ -1,21 +1,19 @@
 package application.security;
 
+import application.repositories.UserRepository;
+import db.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.Date;
 
 @Component
 public class JWTProvider {
@@ -29,8 +27,15 @@ public class JWTProvider {
 
     private long validityInMilliseconds = 3600000; // 1h
 
-    @Autowired
-    private MyUserDetailsService myUserDetails;
+    private String headerName = "Authorization";
+
+    private String prefix = "Bearer ";
+
+    private final UserRepository userRepository;
+
+    public JWTProvider(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @PostConstruct
     protected void init() {
@@ -38,8 +43,11 @@ public class JWTProvider {
     }
 
     public String createToken(String username) {
-
-        Claims claims = Jwts.claims().setSubject(username);
+        if(!userRepository.existsByLogin(username)) throw new RuntimeException("the login is not available");
+        User user = userRepository.findByLogin(username);
+        Claims claims = Jwts.claims()
+                .setSubject(username)
+                .setId(String.valueOf(user.getId()));
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
@@ -52,18 +60,19 @@ public class JWTProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", Collections.emptySet());
-    }
-
-    public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        String id = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .getId();
+        User user = userRepository.findById(Long.valueOf(id)).orElseThrow();
+        return new UsernamePasswordAuthenticationToken(user, "", Collections.emptySet());
     }
 
     public String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        String bearerToken = req.getHeader(headerName);
+        if (bearerToken != null && bearerToken.startsWith(prefix)) {
+            return bearerToken.substring(prefix.length());
         }
         return null;
     }

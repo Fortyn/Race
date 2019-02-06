@@ -18,8 +18,8 @@ public class User {
     @Column(nullable = false)
     private String login;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "password", nullable = false)
+    private char[] password;
 
     @Column(nullable = false)
     private String salt;
@@ -70,11 +70,11 @@ public class User {
         this.login = login;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 

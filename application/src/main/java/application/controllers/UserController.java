@@ -3,6 +3,7 @@ package application.controllers;
 import application.services.IUserService;
 import db.models.User;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,12 +20,6 @@ public class UserController {
         return userService.getUser(id);
     }
 
-    @PostMapping(path = "/reg",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public User addUser(@RequestBody User user){
-        return userService.addUser(user);
-    }
 
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -34,8 +29,10 @@ public class UserController {
     }
 
     @DeleteMapping()
-    public void deleteUser(@RequestParam(name = "id") Long id){
+    public void deleteUser(Authentication authentication){
+        Long id = ((User)authentication.getPrincipal()).getId();
         userService.deleteUser(id);
+
     }
     //endregion
 }
