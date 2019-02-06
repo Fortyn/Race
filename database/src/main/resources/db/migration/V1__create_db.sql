@@ -23,8 +23,7 @@ ALTER TABLE silent.chat
   (
     id bigint NOT NULL DEFAULT nextval('silent.user_id_seq'::regclass),
     name character varying(30) NOT NULL,
-    login character varying(30) NOT NULL,
-    salt character varying(30) NOT NULL,
+    login character varying(30) NOT NULL UNIQUE,
     password character varying(30) NOT NULL,
     CONSTRAINT user_pk PRIMARY KEY (id)
   )

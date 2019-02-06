@@ -21,9 +21,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String salt;
-
     @OneToMany(mappedBy = "user")
     private Set<Message> messages = new HashSet<>();
 
@@ -78,11 +75,4 @@ public class User {
         this.password = password;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 }
