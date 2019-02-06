@@ -19,12 +19,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User addUser(User user) {
-        if(user.getId() != null) throw new IllegalArgumentException("New entity can not have id");
-        return userRepository.save(user);
-    }
-
-    @Override
     public User updateUser(User user) {
         if(!userRepository.existsById(user.getId())) throw new NoSuchElementException("No value present");
         return userRepository.save(user);
