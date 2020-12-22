@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Entity
-@Table(name = "Stage_result")
+@Table(name = "stage_result")
 public class StageResult {
 
     @Id

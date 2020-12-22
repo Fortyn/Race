@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Entity
-@Table(name = "Auto")
+@Table(name = "auto")
 public class Auto {
 
     @Id
