@@ -35,19 +35,19 @@ public class StageResult {
         this.id = id;
     }
 
-    public String getTanso() {
+    public Integer getTanso() {
         return tanso;
     }
 
-    public void setTanso(String tanso) {
+    public void setTanso(Integer tanso) {
         this.tanso = tanso;
     }
 
-    public String getCuiso() {
+    public Integer getCuiso() {
         return cuiso;
     }
 
-    public void setCuiso(String cuiso) {
+    public void setCuiso(Integer cuiso) {
         this.cuiso = cuiso;
     }
 
