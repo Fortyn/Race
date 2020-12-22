@@ -15,10 +15,10 @@ public class StageResult {
     private Integer id;
 
     @Column(name = "tanso", nullable = false)
-    private String tanso;
+    private Integer tanso;
 
     @Column(name = "cuiso", nullable = false)
-    private String cuiso;
+    private Integer cuiso;
 
     @Column(name = "place", nullable = false)
     private Integer place;
