@@ -31,7 +31,7 @@ public class StageQualification {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Auto auto;
+    private Driver driver;
 
     public Integer getId() {
         return id;
@@ -81,11 +81,11 @@ public class StageQualification {
         this.points = points;
     }
 
-    public Auto getAuto() {
-        return auto;
+    public Driver getDriver() {
+        return driver;
     }
 
-    public void setAuto(Auto auto) {
-        this.auto = auto;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 }
