@@ -27,10 +27,6 @@ public class StageResult {
     @JoinColumn(name = "qual_id", nullable = false)
     private StageQualification qualification;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private Driver driver;
-
     public Integer getId() {
         return id;
     }
@@ -69,13 +65,5 @@ public class StageResult {
 
     public void setQualification(StageQualification qualification) {
         this.qualification = qualification;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
     }
 }

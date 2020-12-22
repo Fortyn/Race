@@ -1,11 +1,14 @@
 package application.services.implementation;
 
+import application.models.TeamResult;
 import application.repositories.TeamRepository;
 import application.services.ITeamService;
 import db.models.Team;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamService implements ITeamService {
@@ -33,5 +36,14 @@ public class TeamService implements ITeamService {
     @Override
     public void deleteTeam(Integer id) {
         teamRepository.deleteById(id);  //EmptyResultDataAccessException
+    }
+
+    @Override
+    public List<TeamResult> getTeamResults() {
+        return teamRepository
+                .getTeamResults()
+                .stream()
+                .map(TeamResult::new)
+                .collect(Collectors.toList());
     }
 }

@@ -1,9 +1,12 @@
 package application.controllers;
 
+import application.models.TeamResult;
 import application.services.ITeamService;
 import db.models.Team;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/team")
@@ -33,4 +36,10 @@ public class TeamController {
         teamService.deleteTeam(id);
     }
     //endregion
+
+    @GetMapping("/scores")
+    public List<TeamResult> getTeamResults(){
+        return teamService.getTeamResults();
+    }
+
 }

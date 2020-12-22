@@ -1,6 +1,9 @@
 package application.services;
 
+import application.models.TeamResult;
 import db.models.Team;
+
+import java.util.List;
 
 public interface ITeamService {
     //region CRUD
@@ -9,4 +12,6 @@ public interface ITeamService {
     Team updateTeam(Team team);
     void deleteTeam(Integer id);
     //endregion
+
+    List<TeamResult> getTeamResults();
 }

@@ -1,7 +1,3 @@
---
--- TOC entry 196 (class 1259 OID 426098)
--- Name: Auto; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public."Auto" (
     id integer NOT NULL,
@@ -104,11 +100,10 @@ ALTER TABLE public."Stage_qualification" ALTER COLUMN id ADD GENERATED ALWAYS AS
 
 CREATE TABLE public."Stage_result" (
     id integer NOT NULL,
-    tanso text NOT NULL,
-    cuiso text NOT NULL,
+    tanso integer NOT NULL,
+    cuiso integer NOT NULL,
     place integer NOT NULL,
-    qual_id integer NOT NULL,
-    user_id integer NOT NULL
+    qual_id integer NOT NULL
 );
 
 
@@ -136,13 +131,7 @@ ALTER TABLE public."Stage_result" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTI
 
 CREATE TABLE public."Team" (
     id integer NOT NULL,
-    name text NOT NULL,
-    score integer NOT NULL,
-    first_stage integer,
-    second_stage integer,
-    third_stage integer,
-    fourth_stage integer,
-    fifth_stage integer
+    name text NOT NULL
 );
 
 
@@ -232,7 +221,7 @@ ALTER TABLE ONLY public."Driver"
 --
 
 ALTER TABLE ONLY public."Stage_qualification"
-    ADD CONSTRAINT "Stage_qualification_user_id_fkey" FOREIGN KEY (user_id) REFERENCES public."Auto"(id);
+    ADD CONSTRAINT "Stage_qualification_user_id_fkey" FOREIGN KEY (user_id) REFERENCES public."Driver"(id);
 
 
 --
@@ -244,10 +233,9 @@ ALTER TABLE ONLY public."Stage_result"
     ADD CONSTRAINT "Stage_result_qual_id_fkey" FOREIGN KEY (qual_id) REFERENCES public."Stage_qualification"(id);
 
 
+-- Completed on 2020-12-16 21:57:48
+
 --
--- TOC entry 2726 (class 2606 OID 426165)
--- Name: Stage_result Stage_result_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- PostgreSQL database dump complete
 --
 
-ALTER TABLE ONLY public."Stage_result"
-    ADD CONSTRAINT "Stage_result_user_id_fkey" FOREIGN KEY (user_id) REFERENCES public."Driver"(id);
