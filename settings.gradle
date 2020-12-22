@@ -1,4 +1,4 @@
-rootProject.name = 'Silent'
+rootProject.name = 'Race'
 include 'database'
 include 'application'
 

@@ -1,9 +1,9 @@
 package application.repositories;
 
-import db.models.Chat;
+import db.models.StageQualification;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ChatRepository extends CrudRepository<Chat, Long> {
+public interface StageQualificationRepository extends CrudRepository<StageQualification, Integer> {
 }

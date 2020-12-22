@@ -1,9 +1,9 @@
 package application.repositories;
 
-import db.models.Message;
+import db.models.Auto;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MessageRepository extends CrudRepository<Message, Long> {
+public interface AutoRepository extends CrudRepository<Auto, Integer> {
 }

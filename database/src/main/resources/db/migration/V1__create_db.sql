@@ -1,116 +1,253 @@
+--
+-- TOC entry 196 (class 1259 OID 426098)
+-- Name: Auto; Type: TABLE; Schema: public; Owner: postgres
+--
 
-
--- Table: silent.chat
-
--- DROP TABLE silent.chat;
-CREATE SEQUENCE silent.chat_id_seq START 1 NO CYCLE;
-CREATE TABLE silent.chat (
-  id bigint NOT NULL DEFAULT nextval('silent.chat_id_seq'),
-  name character varying(30) NOT NULL,
-  CONSTRAINT chat_pk PRIMARY KEY (id)
-)
-WITH (
-  OIDS=FALSE
+CREATE TABLE public."Auto" (
+    id integer NOT NULL,
+    mark text NOT NULL,
+    engine text NOT NULL,
+    power integer NOT NULL,
+    engine_volume integer NOT NULL,
+    tire_mark text NOT NULL,
+    driver_id integer NOT NULL
 );
-ALTER TABLE silent.chat
-  OWNER TO silent;
 
-  -- Table: silent."user"
 
-  -- DROP TABLE silent."user";
-  CREATE SEQUENCE silent.user_id_seq START 1 NO CYCLE;
-  CREATE TABLE silent."user"
-  (
-    id bigint NOT NULL DEFAULT nextval('silent.user_id_seq'::regclass),
-    name character varying(30) NOT NULL,
-    login character varying(30) NOT NULL UNIQUE,
-    password character varying(60) NOT NULL,
-    CONSTRAINT user_pk PRIMARY KEY (id)
-  )
-  WITH (
-    OIDS=FALSE
-  );
-  ALTER TABLE silent."user"
-    OWNER TO silent;
+ALTER TABLE public."Auto" OWNER TO postgres;
 
-    -- Table: silent.message
+--
+-- TOC entry 197 (class 1259 OID 426106)
+-- Name: Auto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
 
-    -- DROP TABLE silent.message;
-    CREATE SEQUENCE silent.message_id_seq START 1 NO CYCLE;
-    CREATE TABLE silent.message
-    (
-      id bigint NOT NULL DEFAULT nextval('silent.message_id_seq'::regclass),
-      user_id bigint NOT NULL,
-      chat_id bigint NOT NULL,
-      text text NOT NULL,
-      "time" time without time zone NOT NULL,
-      CONSTRAINT message_pk PRIMARY KEY (id),
-      CONSTRAINT chat_fk FOREIGN KEY (chat_id)
-          REFERENCES silent.chat (id) MATCH SIMPLE
-          ON UPDATE CASCADE ON DELETE NO ACTION,
-      CONSTRAINT user_fk FOREIGN KEY (user_id)
-          REFERENCES silent."user" (id) MATCH SIMPLE
-          ON UPDATE CASCADE ON DELETE NO ACTION
-    )
-    WITH (
-      OIDS=FALSE
-    );
-    ALTER TABLE silent.message
-      OWNER TO silent;
+ALTER TABLE public."Auto" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public."Auto_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
 
-    -- Index: silent.fki_chat
 
-    -- DROP INDEX silent.fki_chat;
+--
+-- TOC entry 205 (class 1259 OID 426135)
+-- Name: Driver; Type: TABLE; Schema: public; Owner: postgres
+--
 
-    CREATE INDEX fki_chat
-      ON silent.message
-      USING btree
-      (chat_id);
+CREATE TABLE public."Driver" (
+    id integer NOT NULL,
+    start_num integer NOT NULL,
+    initials text NOT NULL,
+    city text NOT NULL,
+    instagram text NOT NULL,
+    license text NOT NULL,
+    team_id integer NOT NULL
+);
 
-    -- Index: silent.fki_user_fk
 
-    -- DROP INDEX silent.fki_user_fk;
+ALTER TABLE public."Driver" OWNER TO postgres;
 
-    CREATE INDEX fki_user_fk
-      ON silent.message
-      USING btree
-      (user_id);
+--
+-- TOC entry 204 (class 1259 OID 426133)
+-- Name: Driver_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
 
-      -- Table: silent."right"
+ALTER TABLE public."Driver" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public."Driver_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
 
-      -- DROP TABLE silent."right";
-      CREATE SEQUENCE silent.right_id_seq START 1 NO CYCLE;
-      CREATE TABLE silent."right"
-      (
-        id bigint NOT NULL DEFAULT nextval('silent.right_id_seq'::regclass),
-        user_id bigint NOT NULL,
-        chat_id bigint NOT NULL,
-        write boolean NOT NULL DEFAULT false,
-        invite boolean NOT NULL DEFAULT false,
-        exclude boolean NOT NULL DEFAULT false,
-        remove boolean NOT NULL DEFAULT false,
-        rule boolean NOT NULL DEFAULT false,
-        CONSTRAINT right_pk PRIMARY KEY (id),
-        CONSTRAINT chat_fk FOREIGN KEY (chat_id)
-            REFERENCES silent.chat (id) MATCH SIMPLE
-            ON UPDATE CASCADE ON DELETE CASCADE,
-        CONSTRAINT user_fk FOREIGN KEY (user_id)
-            REFERENCES silent."user" (id) MATCH SIMPLE
-            ON UPDATE CASCADE ON DELETE CASCADE,
-        CONSTRAINT user_chat_unique UNIQUE (user_id, chat_id)
-      )
-      WITH (
-        OIDS=FALSE
-      );
-      ALTER TABLE silent."right"
-        OWNER TO silent;
 
-      -- Index: silent.fki_chat_fk
+--
+-- TOC entry 199 (class 1259 OID 426110)
+-- Name: Stage_qualification; Type: TABLE; Schema: public; Owner: postgres
+--
 
-      -- DROP INDEX silent.fki_chat_fk;
+CREATE TABLE public."Stage_qualification" (
+    id integer NOT NULL,
+    stage_number integer NOT NULL,
+    place integer NOT NULL,
+    best integer NOT NULL,
+    worst integer NOT NULL,
+    points integer NOT NULL,
+    user_id integer NOT NULL
+);
 
-      CREATE INDEX fki_chat_fk
-        ON silent."right"
-        USING btree
-        (chat_id);
-      
+
+ALTER TABLE public."Stage_qualification" OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 426108)
+-- Name: Stage_qualification_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."Stage_qualification" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public."Stage_qualification_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 201 (class 1259 OID 426117)
+-- Name: Stage_result; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Stage_result" (
+    id integer NOT NULL,
+    tanso text NOT NULL,
+    cuiso text NOT NULL,
+    place integer NOT NULL,
+    qual_id integer NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public."Stage_result" OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 426115)
+-- Name: Stage_result_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."Stage_result" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public."Stage_result_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 203 (class 1259 OID 426127)
+-- Name: Team; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Team" (
+    id integer NOT NULL,
+    name text NOT NULL,
+    score integer NOT NULL,
+    first_stage integer,
+    second_stage integer,
+    third_stage integer,
+    fourth_stage integer,
+    fifth_stage integer
+);
+
+
+ALTER TABLE public."Team" OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 426125)
+-- Name: Team_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public."Team" ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public."Team_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 2714 (class 2606 OID 426105)
+-- Name: Auto Auto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Auto"
+    ADD CONSTRAINT "Auto_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2722 (class 2606 OID 426142)
+-- Name: Driver Driver_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Driver"
+    ADD CONSTRAINT "Driver_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2716 (class 2606 OID 426114)
+-- Name: Stage_qualification Stage_qualification_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Stage_qualification"
+    ADD CONSTRAINT "Stage_qualification_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2718 (class 2606 OID 426124)
+-- Name: Stage_result Stage_result_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Stage_result"
+    ADD CONSTRAINT "Stage_result_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2720 (class 2606 OID 426154)
+-- Name: Team Team_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Team"
+    ADD CONSTRAINT "Team_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2723 (class 2606 OID 426148)
+-- Name: Auto Auto_driver_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Auto"
+    ADD CONSTRAINT "Auto_driver_id_fkey" FOREIGN KEY (driver_id) REFERENCES public."Driver"(id);
+
+
+--
+-- TOC entry 2727 (class 2606 OID 426155)
+-- Name: Driver Driver_team_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Driver"
+    ADD CONSTRAINT "Driver_team_id_fkey" FOREIGN KEY (team_id) REFERENCES public."Team"(id);
+
+
+--
+-- TOC entry 2724 (class 2606 OID 426170)
+-- Name: Stage_qualification Stage_qualification_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Stage_qualification"
+    ADD CONSTRAINT "Stage_qualification_user_id_fkey" FOREIGN KEY (user_id) REFERENCES public."Auto"(id);
+
+
+--
+-- TOC entry 2725 (class 2606 OID 426160)
+-- Name: Stage_result Stage_result_qual_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Stage_result"
+    ADD CONSTRAINT "Stage_result_qual_id_fkey" FOREIGN KEY (qual_id) REFERENCES public."Stage_qualification"(id);
+
+
+--
+-- TOC entry 2726 (class 2606 OID 426165)
+-- Name: Stage_result Stage_result_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Stage_result"
+    ADD CONSTRAINT "Stage_result_user_id_fkey" FOREIGN KEY (user_id) REFERENCES public."Driver"(id);

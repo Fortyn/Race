@@ -9,6 +9,12 @@ buildscript {
 
 apply plugin: 'org.springframework.boot'
 
+bootJar {
+    manifest {
+        attributes 'Start-Class': 'application.Application'
+    }
+}
+
 ext {
     bootVer = "2.1.0.RELEASE"
 }
@@ -24,9 +30,6 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$bootVer"
 
-    implementation "org.springframework.boot:spring-boot-starter-security:$bootVer"
-
-    implementation "io.jsonwebtoken:jjwt:0.9.1"
-
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.0'
 }
 
