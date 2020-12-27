@@ -5,6 +5,8 @@ import db.models.Auto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/auto")
 public class AutoController {
@@ -13,6 +15,10 @@ public class AutoController {
         this.autoService = autoService;
     }
 
+    @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Auto> getAll() {
+        return autoService.getAll();
+    }
     //region CRUD
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Auto getAuto(@RequestParam(name = "id") Integer id){

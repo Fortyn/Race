@@ -5,7 +5,10 @@ import application.services.IStageQualificationService;
 import db.models.StageQualification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class StageQualificationService implements IStageQualificationService {
@@ -13,6 +16,13 @@ public class StageQualificationService implements IStageQualificationService {
     public StageQualificationService(StageQualificationRepository stageQualificationRepository){
         this.stageQualificationRepository = stageQualificationRepository;
     }
+
+    @Override
+    public List<StageQualification> getAll() {
+        return StreamSupport.stream(stageQualificationRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public StageQualification getStageQualification(Integer id) {
         return stageQualificationRepository.findById(id).orElseThrow(); //NoSuchElementException

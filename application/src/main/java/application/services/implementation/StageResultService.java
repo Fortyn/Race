@@ -4,7 +4,11 @@ import application.repositories.StageResultRepository;
 import application.services.IStageResultService;
 import db.models.StageResult;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class StageResultService implements IStageResultService {
@@ -12,6 +16,13 @@ public class StageResultService implements IStageResultService {
     public StageResultService(StageResultRepository stageResultRepository){
         this.stageResultRepository = stageResultRepository;
     }
+
+    @Override
+    public List<StageResult> getAll() {
+        return StreamSupport.stream(stageResultRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public StageResult getStageResult(Integer id) {
         return stageResultRepository.findById(id).orElseThrow(); //NoSuchElementException

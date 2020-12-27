@@ -5,12 +5,19 @@ import db.models.StageResult;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/result")
 public class StageResultController {
     private final IStageResultService stageResultService;
     public StageResultController(IStageResultService stageResultService){
         this.stageResultService = stageResultService;
+    }
+
+    @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<StageResult> getAll() {
+        return stageResultService.getAll();
     }
 
     //region CRUD

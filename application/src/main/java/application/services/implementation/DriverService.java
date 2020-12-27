@@ -5,7 +5,10 @@ import application.services.IDriverService;
 import db.models.Driver;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class DriverService implements IDriverService {
@@ -13,6 +16,13 @@ public class DriverService implements IDriverService {
     public DriverService(DriverRepository driverRepository){
         this.driverRepository = driverRepository;
     }
+
+    @Override
+    public List<Driver> getAll() {
+        return StreamSupport.stream(driverRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public Driver getDriver(Integer id) {
         return driverRepository.findById(id).orElseThrow(); //NoSuchElementException

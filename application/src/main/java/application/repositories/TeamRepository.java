@@ -24,12 +24,12 @@ public interface TeamRepository extends CrudRepository<Team, Integer> {
             ")), ',')," +
             "   ']'" +
             " ) as \"stageScores\" " +
-            "FROM public.\"Team\" team\n" +
-            "JOIN public.\"Driver\" driver ON team.id = driver.team_id\n" +
-            "JOIN public.\"Stage_qualification\" sq ON sq.user_id = driver.id\n" +
+            "FROM public.team team\n" +
+            "JOIN public.driver driver ON team.id = driver.team_id\n" +
+            "JOIN public.stage_qualification sq ON sq.user_id = driver.id\n" +
             "JOIN (\n" +
             "\tSELECT sr.qual_id, sum(sr.tanso+sr.cuiso) \n" +
-            "\tFROM public.\"Stage_result\" sr\n" +
+            "\tFROM public.stage_result sr\n" +
             "\tGROUP BY sr.qual_id\n" +
             "\tORDER BY sr.qual_id\n" +
             ") sr ON sq.id = sr.qual_id\n" +

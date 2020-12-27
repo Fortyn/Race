@@ -6,6 +6,7 @@ import db.models.Team;
 import java.util.List;
 
 public interface ITeamService {
+
     //region CRUD
     Team getTeam(Integer id);
     Team addTeam(Team team);

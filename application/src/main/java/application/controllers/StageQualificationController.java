@@ -5,6 +5,8 @@ import db.models.StageQualification;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/qualification")
 public class StageQualificationController {
@@ -13,6 +15,10 @@ public class StageQualificationController {
         this.stageQualificationService = stageQualificationService;
     }
 
+    @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<StageQualification> getAll() {
+        return stageQualificationService.getAll();
+    }
     //region CRUD
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public StageQualification getStageQualification(@RequestParam(name = "id") Integer id){

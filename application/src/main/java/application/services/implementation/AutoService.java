@@ -4,7 +4,11 @@ import application.repositories.AutoRepository;
 import application.services.IAutoService;
 import db.models.Auto;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class AutoService implements IAutoService {
@@ -12,6 +16,13 @@ public class AutoService implements IAutoService {
     public AutoService(AutoRepository autoRepository){
         this.autoRepository = autoRepository;
     }
+
+    @Override
+    public List<Auto> getAll() {
+        return StreamSupport.stream(autoRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public Auto getAuto(Integer id) {
         return autoRepository.findById(id).orElseThrow(); //NoSuchElementException
