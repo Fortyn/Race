@@ -19,15 +19,15 @@ public interface TeamRepository extends CrudRepository<Team, Integer> {
             "   array_to_string(array_agg(CONCAT(" +
             "   '{ " +
             "       \"name\":\"',sq.stage_number,'\", " +
-            "       \"score\":',sr.sum," +
-            "   '}'" +
+            "       \"score\":\"',sr.sum," +
+            "   '\"}'" +
             ")), ',')," +
             "   ']'" +
             " ) as \"stageScores\" " +
             "FROM public.team team\n" +
-            "JOIN public.driver driver ON team.id = driver.team_id\n" +
-            "JOIN public.stage_qualification sq ON sq.user_id = driver.id\n" +
-            "JOIN (\n" +
+            "LEFT JOIN public.driver driver ON team.id = driver.team_id\n" +
+            "LEFT JOIN public.stage_qualification sq ON sq.user_id = driver.id\n" +
+            "LEFT JOIN (\n" +
             "\tSELECT sr.qual_id, sum(sr.tanso+sr.cuiso) \n" +
             "\tFROM public.stage_result sr\n" +
             "\tGROUP BY sr.qual_id\n" +

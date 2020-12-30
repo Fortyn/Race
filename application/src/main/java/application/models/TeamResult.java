@@ -14,6 +14,7 @@ public class TeamResult {
             return mapper.readValue(stageScores, new TypeReference<>() {
             });
         } catch (Exception ignore) {
+            ignore.printStackTrace();
             return List.of();
         }
 
