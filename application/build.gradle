@@ -21,14 +21,9 @@ ext {
 }
 dependencies {
     implementation project(':database')
-    // tag::jetty[]
-    implementation("org.springframework.boot:spring-boot-starter-web:$bootVer") {
-//        exclude module: "spring-boot-starter-tomcat"
-    }
+    implementation("org.springframework.boot:spring-boot-starter-web:$bootVer")
 
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:$bootVer"
-//    implementation "org.springframework.boot:spring-boot-starter-jetty:$bootVer"
-    // end::jetty[]
 
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$bootVer"
 

@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class GreetingController {
+public class DefaultController {
 
     @GetMapping("/")
-    public String greet() {
-        return "Hey there!";
+    public String root() {
+        return "I'm deployed";
     }
 }
