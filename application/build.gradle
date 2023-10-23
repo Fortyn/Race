@@ -8,8 +8,9 @@ buildscript {
 }
 
 apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
 
-bootJar {
+bootWar {
     manifest {
         attributes 'Start-Class': 'application.Application'
     }
