@@ -7,14 +7,14 @@ buildscript {
     }
 }
 
-apply plugin: 'org.springframework.boot'
+//apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
 
-bootWar {
-    manifest {
-        attributes 'Start-Class': 'application.Application'
-    }
-}
+//bootWar {
+//    manifest {
+//        attributes 'Start-Class': 'application.Application'
+//    }
+//}
 
 ext {
     bootVer = "2.1.0.RELEASE"
@@ -26,6 +26,7 @@ dependencies {
 //        exclude module: "spring-boot-starter-tomcat"
     }
 
+    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:$bootVer"
 //    implementation "org.springframework.boot:spring-boot-starter-jetty:$bootVer"
     // end::jetty[]
 
